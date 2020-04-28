@@ -18,9 +18,66 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="8Pj-9K-CWZ">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Y3-q1-wP9">
+                                <rect key="frame" x="90" y="111.66666666666667" width="234" height="26.000000000000014"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iN7-Qg-8Ij">
+                                        <rect key="frame" x="0.0" y="0.0" width="149" height="26"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="26" id="uPh-uu-EpO"/>
+                                        </constraints>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Time Remaining: ">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="28" name="SignPainter-HouseScript"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gCw-wn-Qr9">
+                                        <rect key="frame" x="149" y="0.0" width="70" height="26"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="70" id="FfD-KS-s1B"/>
+                                            <constraint firstAttribute="height" constant="26" id="x1l-F9-a4T"/>
+                                        </constraints>
+                                        <attributedString key="attributedText">
+                                            <fragment content="10.00">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="28" name="SignPainter-HouseScript"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r3Z-ub-meL">
+                                        <rect key="frame" x="219" y="0.0" width="15" height="26"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="26" id="VEY-hX-rK0"/>
+                                        </constraints>
+                                        <attributedString key="attributedText">
+                                            <fragment content="s.">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="28" name="SignPainter-HouseScript"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Due-Xv-12x">
-                                <rect key="frame" x="20" y="126.66666666666669" width="374" height="618.66666666666652"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="20" y="142.66666666666669" width="374" height="714.33333333333326"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="K64-61-46g">
                                     <size key="itemSize" width="79" height="127.5"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -37,6 +94,7 @@
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p5c-V2-1IS">
                                                     <rect key="frame" x="0.0" y="0.0" width="79" height="127.66666666666667"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardBack" translatesAutoresizingMaskIntoConstraints="NO" id="gvc-Zp-bb6">
                                                     <rect key="frame" x="0.0" y="0.0" width="79" height="127.66666666666667"/>
@@ -74,72 +132,21 @@
                                 </attributedString>
                                 <color key="highlightedColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="oDt-oh-tPi" userLabel="ScoreView">
-                                <rect key="frame" x="10" y="765.33333333333337" width="394" height="86.666666666666629"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ru-Eu-n8d">
-                                        <rect key="frame" x="156.33333333333334" y="0.0" width="81.333333333333343" height="43.333333333333336"/>
-                                        <attributedString key="attributedText">
-                                            <fragment content="Score">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" size="48" name="SignPainter-HouseScriptSemibold"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LOU-uv-HVh">
-                                        <rect key="frame" x="185.33333333333334" y="43.333333333333258" width="23.666666666666657" height="43.333333333333343"/>
-                                        <attributedString key="attributedText">
-                                            <fragment content="0">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" size="48" name="SignPainter-HouseScriptSemibold"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gCw-wn-Qr9">
-                                <rect key="frame" x="122.66666666666667" y="104" width="168.66666666666663" height="26"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="26" id="x1l-F9-a4T"/>
-                                </constraints>
-                                <attributedString key="attributedText">
-                                    <fragment content="Time Remaining: 10">
-                                        <attributes>
-                                            <color key="NSColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="28" name="SignPainter-HouseScript"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="oDt-oh-tPi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5A6-TY-P1z"/>
                             <constraint firstItem="Due-Xv-12x" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="9tO-ZU-kC8"/>
                             <constraint firstItem="8Pj-9K-CWZ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="F8x-kb-lGV"/>
                             <constraint firstItem="8Pj-9K-CWZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Fh9-9E-3nQ"/>
-                            <constraint firstItem="oDt-oh-tPi" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="I68-IJ-n2W"/>
                             <constraint firstItem="nKZ-Cy-rYD" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Me0-Wj-Jcp"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="oDt-oh-tPi" secondAttribute="trailing" constant="10" id="MnU-Nk-jvn"/>
-                            <constraint firstItem="gCw-wn-Qr9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="P6c-fR-Me4"/>
-                            <constraint firstItem="oDt-oh-tPi" firstAttribute="top" secondItem="Due-Xv-12x" secondAttribute="bottom" constant="20" id="ZaD-3o-UKQ"/>
+                            <constraint firstItem="9Y3-q1-wP9" firstAttribute="top" secondItem="nKZ-Cy-rYD" secondAttribute="bottom" constant="5" id="ce2-G4-agf"/>
                             <constraint firstAttribute="trailing" secondItem="8Pj-9K-CWZ" secondAttribute="trailing" id="chP-nv-qqc"/>
+                            <constraint firstItem="9Y3-q1-wP9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dN7-E2-fYs"/>
                             <constraint firstItem="nKZ-Cy-rYD" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="5" id="dkM-xr-pM5"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Due-Xv-12x" secondAttribute="trailing" constant="20" id="eZy-Qx-her"/>
-                            <constraint firstItem="Due-Xv-12x" firstAttribute="top" secondItem="nKZ-Cy-rYD" secondAttribute="bottom" constant="20" id="hbx-dM-zj2"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="oDt-oh-tPi" secondAttribute="bottom" constant="10" id="muY-5b-VJH"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Due-Xv-12x" secondAttribute="bottom" constant="5" id="koC-oX-pDX"/>
                             <constraint firstAttribute="bottom" secondItem="8Pj-9K-CWZ" secondAttribute="bottom" id="rpx-fy-def"/>
+                            <constraint firstItem="Due-Xv-12x" firstAttribute="top" secondItem="9Y3-q1-wP9" secondAttribute="bottom" constant="5" id="veF-kV-u4J"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
