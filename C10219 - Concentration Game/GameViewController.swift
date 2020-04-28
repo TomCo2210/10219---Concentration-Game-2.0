@@ -2,101 +2,70 @@
 //  GameViewController.swift
 //  C10219 - Concentration Game
 //
-//  Created by user167774 on 16/04/2020.
+//  Created by Tom Cohen on 16/04/2020.
 //  Copyright © 2020 com.Tomco.iOs. All rights reserved.
 //
 
 import UIKit
 
-class GameViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource {
+class GameViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    //Deck Collection view
     @IBOutlet weak var main_CV_cards: UICollectionView!
     
-    var cards = [Card]()
+    //Deck init
+    var deck = [Card]()
+    
+    //CardModel for Deck cards
     var model = CardModel()
     
-    @IBOutlet weak var main_LBL_timer: UILabel!
+    //Match related member
     var firstCardFlipped:IndexPath?
     
-    
+    // timer related members
+    @IBOutlet weak var main_LBL_timer: UILabel!
     var timer:Timer?
-    var milis:Float = 35*1000
-    
-    
-    
+    var milis:Float!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //get randomized new deck of cards
-        //cards = model.getDeck()
         resetGame()
-//        main_CV_cards.delegate = self
-//        main_CV_cards.dataSource = self
         
-        //timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(timerElapsed), userInfo: nil, repeats: true)
-        //RunLoop.main.add(timer!, forMode: .common)
-        
-    }
-    //MARK: UICollectionView Related Protocols:
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cards.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = main_CV_cards.dequeueReusableCell(withReuseIdentifier: "CardCell", for: indexPath) as! CardCollectionViewCell
-        
-        let card = cards[indexPath.row]
-        
-        cell.setCard(card)
-        
-        return cell
-    }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if milis <= 0{
-            return}
-        let cell = main_CV_cards.cellForItem(at: indexPath)  as! CardCollectionViewCell
-        let card = cards[indexPath.row]
-        if card.isShown == false && card.isMatched == false {
-            cell.flip()
-            card.isShown = true
-            
-            if firstCardFlipped == nil{
-                firstCardFlipped = indexPath
-            }
-            else{
-                checkMatch(indexPath)
-            }
-        }
-        
-    }
+    
     //MARK: Game Logic:
     func checkMatch (_ secondCardFlipped:IndexPath)
     {
-        let cell1 = main_CV_cards.cellForItem(at: firstCardFlipped! )as? CardCollectionViewCell
-        let cell2 = main_CV_cards.cellForItem(at: secondCardFlipped )as? CardCollectionViewCell
+        let cell1 = main_CV_cards.cellForItem(at: firstCardFlipped!) as? CardCollectionViewCell
+        let cell2 = main_CV_cards.cellForItem(at: secondCardFlipped) as? CardCollectionViewCell
         
-        let card1 = cards[firstCardFlipped!.row]
-        let card2 = cards[secondCardFlipped.row]
+        let card1 = deck[firstCardFlipped!.row]
+        let card2 = deck[secondCardFlipped.row]
         
         if card1.imageName == card2.imageName {
+            
+            //set both as matched
             card1.isMatched=true
             card2.isMatched=true
             
+            //remove both from screen
             cell1?.remove()
             cell2?.remove()
             
+            //check if game ended
             isGameEnded()
+            
         } else{
+            //flip both back
             card1.isShown=false
             card2.isShown=false
-            
             cell1?.flipBack()
             cell2?.flipBack()
         }
         
         if cell1 == nil{
+            // for cases of cell1 being recycled and needed to be reloaded
             main_CV_cards.reloadItems(at: [firstCardFlipped!])
         }
         
@@ -106,7 +75,7 @@ class GameViewController: UIViewController,UICollectionViewDelegate,UICollection
     func isGameEnded(){
         var isWon = true
         
-        for card in cards {
+        for card in deck {
             if card.isMatched == false
             {
                 isWon=false
@@ -122,8 +91,8 @@ class GameViewController: UIViewController,UICollectionViewDelegate,UICollection
             title = "Congratulations!"
             message = "You've Won!"
             
-        }else{
-            if milis > 0{
+        } else {
+            if milis > 0 {
                 return
             }
             title = "Game Over!"
@@ -137,7 +106,6 @@ class GameViewController: UIViewController,UICollectionViewDelegate,UICollection
     func showAlert(_ title:String, _ message:String)
     {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        //let alertAction = UIAlertAction(title: "Ok", style: .default, handler: )
         let alertAction = UIAlertAction(title: "Start Again!", style: .default, handler: {(alert: UIAlertAction!) in self.resetGame()})
         alert.addAction(alertAction)
         present(alert,animated: true, completion: nil)
@@ -145,29 +113,84 @@ class GameViewController: UIViewController,UICollectionViewDelegate,UICollection
     
     func resetGame()
     {
-        cards = model.getDeck()
-        milis = 35*1000
+        deck = model.getDeck()
+        milis = 180*1000
         main_CV_cards.delegate = self
         main_CV_cards.dataSource = self
-        timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(timerElapsed), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(timerCountDown), userInfo: nil, repeats: true)
         RunLoop.main.add(timer!, forMode: .common)
         firstCardFlipped = nil
         main_CV_cards.reloadData()
     }
     
     //MARK: Timer:
-    @objc func timerElapsed(){
+    @objc func timerCountDown() {
         milis -= 1
         
         let seconds = String(format: "%.2f", milis/1000)
         main_LBL_timer.text = "\(seconds)"
         
-        if milis <= 0{
+        if milis <= 0 {
             timer?.invalidate()
-            
             isGameEnded()
         }
     }
     
+    // MARK: UICollectionView Related Protocols:
     
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return deck.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        // Resize each card to be able to show it on low resolutions screens.
+        
+        // width:
+        var width = self.view.frame.size.width
+        width = width - (10*10)
+        width = width/4
+        print(width)
+        
+        //height:
+        var height = width / 79
+        height = height * 127.5
+        print(height)
+        
+        //return values as CGSize
+        return CGSize(width: width , height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        //assign Cell in CollectionView To a card in deck.
+        let cell = main_CV_cards.dequeueReusableCell(withReuseIdentifier: "CardCell", for: indexPath) as! CardCollectionViewCell
+        
+        let card = deck[indexPath.row]
+        
+        cell.setCard(card)
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //onClick()
+        
+        //if time ended, do nothing
+        if milis <= 0 {
+            return
+        }
+        
+        let cell = main_CV_cards.cellForItem(at: indexPath)  as! CardCollectionViewCell
+        let card = deck[indexPath.row]
+        
+        if card.isShown == false && card.isMatched == false {
+            cell.flip()
+            card.isShown = true
+            
+            if firstCardFlipped == nil {
+                firstCardFlipped = indexPath
+            } else {
+                checkMatch(indexPath)
+            }
+        }
+    }
 }

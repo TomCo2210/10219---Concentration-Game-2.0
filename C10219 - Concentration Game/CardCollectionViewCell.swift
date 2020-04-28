@@ -2,7 +2,7 @@
 //  CardCollectionViewCell.swift
 //  C10219 - Concentration Game
 //
-//  Created by user167774 on 28/04/2020.
+//  Created by Tom Cohen on 28/04/2020.
 //  Copyright © 2020 com.Tomco.iOs. All rights reserved.
 //
 
@@ -31,6 +31,7 @@ class CardCollectionViewCell: UICollectionViewCell {
         
         card_IMG_front.image = UIImage(named: card.imageName)
         
+        //reshow card
         if card.isShown == true{
             UIView.transition(from: card_IMG_back, to: card_IMG_front, duration: 0, options: [.transitionFlipFromLeft,.showHideTransitionViews], completion: nil)
         }
