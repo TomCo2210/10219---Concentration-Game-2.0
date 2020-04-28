@@ -146,7 +146,7 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
         // Resize each card to be able to show it on low resolutions screens.
         
         // width:
-        var width = self.view.frame.size.width
+        var  width = self.view.frame.size.width < self.view.frame.size.height ? self.view.frame.size.width : self.view.frame.size.height
         width = width - (10*10)
         width = width/4
         print(width)
