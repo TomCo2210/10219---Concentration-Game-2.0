@@ -41,11 +41,11 @@ class CardCollectionViewCell: UICollectionViewCell {
     }
     
     func flip() {
-        UIView.transition(from: card_IMG_back, to: card_IMG_front, duration: 0.3, options: [.transitionFlipFromLeft,.showHideTransitionViews], completion: nil)
+        UIView.transition(from: card_IMG_back, to: card_IMG_front, duration: 0.2, options: [.transitionFlipFromLeft,.showHideTransitionViews], completion: nil)
     }
     func flipBack() {
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-            UIView.transition(from: self.card_IMG_front, to: self.card_IMG_back , duration: 0.3, options: [.transitionFlipFromRight,.showHideTransitionViews], completion: nil)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.4) {
+            UIView.transition(from: self.card_IMG_front, to: self.card_IMG_back , duration: 0.2, options: [.transitionFlipFromRight,.showHideTransitionViews], completion: nil)
         }
         
     }
@@ -53,7 +53,7 @@ class CardCollectionViewCell: UICollectionViewCell {
         
         card_IMG_back.alpha=0
         
-        UIView.animate(withDuration: 0.3, delay: 0.5, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.2, delay: 0.5, options: .curveEaseOut, animations: {
             self.card_IMG_front.alpha=0
         }, completion: nil)
     }

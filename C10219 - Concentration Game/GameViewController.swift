@@ -114,13 +114,14 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func resetGame()
     {
         deck = model.getDeck()
-        milis = 180*1000
+        milis = 90*1000
         main_CV_cards.delegate = self
         main_CV_cards.dataSource = self
         timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(timerCountDown), userInfo: nil, repeats: true)
         RunLoop.main.add(timer!, forMode: .common)
         firstCardFlipped = nil
         main_CV_cards.reloadData()
+        
     }
     
     //MARK: Timer:

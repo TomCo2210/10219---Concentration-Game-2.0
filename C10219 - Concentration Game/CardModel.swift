@@ -16,16 +16,16 @@ class CardModel {
         var cardsArray = [Card]()
         
         //create pairs of cards
-        for card in 1...8 {
+        for couple in 1...8 {
             
             //create first card:
             let card1 = Card()
-            card1.imageName = "symbol_\(card)"
+            card1.imageName = "symbol_\(couple)"
             print(card1.imageName)
            
             //create second card:
             let card2 = Card()
-            card2.imageName = "symbol_\(card)"
+            card2.imageName = "symbol_\(couple)"
             print(card2.imageName)
            
             //append both cards to array
