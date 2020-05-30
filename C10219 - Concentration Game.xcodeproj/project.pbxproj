@@ -105,13 +105,12 @@
 		712625F4244610E30084DE92 /* C10219 - Concentration Game */ = {
 			isa = PBXGroup;
 			children = (
-				7169FE8324585CD60059DCF2 /* Card */,
+				7154772024573F6A00F893E7 /* Card.swift */,
+				7169FE8124585BB80059DCF2 /* CardCollectionViewCell.swift */,
+				7154771E24573F5700F893E7 /* CardModel.swift */,
 				712625F5244610E30084DE92 /* AppDelegate.swift */,
 				712625F7244610E30084DE92 /* SceneDelegate.swift */,
 				718A1BE6244868F200833FC0 /* GameViewController.swift */,
-				7154771E24573F5700F893E7 /* CardModel.swift */,
-				7169FE8124585BB80059DCF2 /* CardCollectionViewCell.swift */,
-				7154772024573F6A00F893E7 /* Card.swift */,
 				712625FB244610E30084DE92 /* Main.storyboard */,
 				712625FE244610E40084DE92 /* Assets.xcassets */,
 				71262600244610E40084DE92 /* LaunchScreen.storyboard */,
@@ -136,13 +135,6 @@
 				71262619244610E40084DE92 /* Info.plist */,
 			);
 			path = "C10219 - Concentration GameUITests";
-			sourceTree = "<group>";
-		};
-		7169FE8324585CD60059DCF2 /* Card */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Card;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
