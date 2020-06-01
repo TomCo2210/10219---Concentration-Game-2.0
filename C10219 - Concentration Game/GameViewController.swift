@@ -13,6 +13,7 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
     //Deck Collection view/Users/user167774/Documents/10219/C10219 - Concentration Game/C10219 - Concentration Game/GameViewController.swift
     @IBOutlet weak var main_CV_cards: UICollectionView!
 
+  
     var imagePrefix:String = "casino"
     
     var numberOfPairs:Int = 0
@@ -33,10 +34,9 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.setNavigationBarHidden(true,animated: false)
         resetGame(numberOfPairs,imagePrefix)
         //Easy = 8, Medium = 10, Hard = 15
-       
-        
     }
     
     
@@ -196,5 +196,8 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 checkMatch(indexPath)
             }
         }
+    }
+    @IBAction func backButtonPressed(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
     }
 }
