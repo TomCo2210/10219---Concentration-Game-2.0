@@ -10,13 +10,13 @@ import Foundation
 
 class CardModel {
         
-    func getDeck() -> [Card] {
+    func getDeck(_ numOfPairs:Int) -> [Card] {
         
         //create an array of cards
         var cardsArray = [Card]()
         
         //create pairs of cards
-        for couple in 1...8 {
+        for couple in 1...numOfPairs {
             
             //create first card:
             let card1 = Card()

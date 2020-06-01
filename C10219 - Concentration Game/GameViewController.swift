@@ -8,11 +8,12 @@
 
 import UIKit
 
-class GameViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class GameViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate {
     
-    //Deck Collection view
+    //Deck Collection view/Users/user167774/Documents/10219/C10219 - Concentration Game/C10219 - Concentration Game/GameViewController.swift
     @IBOutlet weak var main_CV_cards: UICollectionView!
     
+    var numberOfPairs:Int = 0
     //Deck init
     var deck = [Card]()
     
@@ -22,14 +23,16 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
     //Match related member
     var firstCardFlipped:IndexPath?
     
-    // timer related members
+    //timer related members
     @IBOutlet weak var main_LBL_timer: UILabel!
     var timer:Timer?
     var milis:Float!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        resetGame()
+        resetGame(numberOfPairs)
+        //Easy = 8, Medium = 10, Hard = 15
+       
         
     }
     
@@ -106,14 +109,14 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func showAlert(_ title:String, _ message:String)
     {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "Start Again!", style: .default, handler: {(alert: UIAlertAction!) in self.resetGame()})
+        let alertAction = UIAlertAction(title: "Start Again!", style: .default, handler: {(alert: UIAlertAction!) in self.resetGame(0)})
         alert.addAction(alertAction)
         present(alert,animated: true, completion: nil)
     }
     
-    func resetGame()
+    func resetGame(_ numOfPairs:Int)
     {
-        deck = model.getDeck()
+        deck = model.getDeck(numOfPairs)
         milis = 90*1000
         main_CV_cards.delegate = self
         main_CV_cards.dataSource = self
@@ -147,9 +150,22 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
         // Resize each card to be able to show it on low resolutions screens.
         
         // width:
-        var  width = self.view.frame.size.width < self.view.frame.size.height ? self.view.frame.size.width : self.view.frame.size.height
+        var width:CGFloat
+        if (self.view.frame.size.width < self.view.frame.size.height){
+        width = self.view.frame.size.width
         width = width - (10*10)
-        width = width/4
+        let divisor = Int(sqrt(Double(deck.count)).rounded(.towardZero))
+        // 16 -> 4*4, 20 -> 4*5, 30 -> 5*6
+        print(divisor)
+            width = width/CGFloat(divisor)}
+        else{
+            width = self.view.frame.size.height
+                   width = width - (10*10)
+                   let divisor = Int(sqrt(Double(deck.count)).rounded(.awayFromZero))
+                   // 16 -> 8*2, 20 -> 10*2, 30 -> 10*3
+                   print(divisor)
+                       width = width/CGFloat(divisor)
+        }
         print(width)
         
         //height:

@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="0aR-2g-aut">
             <objects>
-                <viewController id="cEv-gg-dWk" sceneMemberID="viewController">
+                <viewController id="cEv-gg-dWk" customClass="MainViewController" customModule="C10219___Concentration_Game" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Wyx-jV-hnQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -33,42 +33,84 @@
                                 </attributedString>
                                 <color key="highlightedColor" name="TextColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="un4-jy-dhA">
-                                <rect key="frame" x="184" y="209" width="84" height="120"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="un4-jy-dhA">
+                                <rect key="frame" x="140.66666666666666" y="355" width="132.99999999999997" height="186.33333333333337"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XAy-og-fbV">
-                                        <rect key="frame" x="0.0" y="0.0" width="84" height="30"/>
-                                        <state key="normal" title="Easy">
-                                            <color key="titleColor" name="TextColor"/>
+                                    <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XAy-og-fbV">
+                                        <rect key="frame" x="0.0" y="0.0" width="133" height="44.333333333333336"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Easy">
+                                                    <attributes>
+                                                        <color key="NSColor" name="TextColor"/>
+                                                        <font key="NSFont" size="36" name="SignPainter-HouseScript"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
                                         </state>
+                                        <connections>
+                                            <action selector="LevelClicked:" destination="cEv-gg-dWk" eventType="touchUpInside" id="6HZ-RR-kH8"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ap-q2-gCl">
-                                        <rect key="frame" x="0.0" y="30" width="84" height="30"/>
-                                        <state key="normal" title="Medium">
-                                            <color key="titleColor" name="TextColor"/>
+                                    <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9ap-q2-gCl">
+                                        <rect key="frame" x="0.0" y="47.333333333333314" width="133" height="44.333333333333343"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Medium">
+                                                    <attributes>
+                                                        <color key="NSColor" name="TextColor"/>
+                                                        <font key="NSFont" size="36" name="SignPainter-HouseScript"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
                                         </state>
+                                        <connections>
+                                            <action selector="LevelClicked:" destination="cEv-gg-dWk" eventType="touchUpInside" id="brr-bm-rit"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jy9-gi-FOF">
-                                        <rect key="frame" x="0.0" y="60" width="84" height="30"/>
-                                        <state key="normal" title="Hard">
-                                            <color key="titleColor" name="TextColor"/>
+                                    <button opaque="NO" tag="15" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jy9-gi-FOF">
+                                        <rect key="frame" x="0.0" y="94.666666666666686" width="133" height="44.333333333333343"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Hard">
+                                                    <attributes>
+                                                        <color key="NSColor" name="TextColor"/>
+                                                        <font key="NSFont" size="36" name="SignPainter-HouseScript"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
                                         </state>
+                                        <connections>
+                                            <action selector="LevelClicked:" destination="cEv-gg-dWk" eventType="touchUpInside" id="hQt-4w-kOa"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hNN-d1-dWS">
-                                        <rect key="frame" x="0.0" y="90" width="84" height="30"/>
-                                        <state key="normal" title="High Scores">
-                                            <color key="titleColor" name="TextColor"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hNN-d1-dWS">
+                                        <rect key="frame" x="0.0" y="142" width="133" height="44.333333333333343"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="High Scores">
+                                                    <attributes>
+                                                        <color key="NSColor" name="TextColor"/>
+                                                        <font key="NSFont" size="36" name="SignPainter-HouseScript"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
                                         </state>
+                                        <connections>
+                                            <action selector="HighScoresClicked:" destination="cEv-gg-dWk" eventType="touchUpInside" id="SFK-dZ-thg"/>
+                                        </connections>
                                     </button>
                                 </subviews>
-                                <variation key="heightClass=compact-widthClass=compact" axis="horizontal"/>
-                                <variation key="heightClass=compact-widthClass=regular" axis="horizontal"/>
+                                <variation key="heightClass=compact-widthClass=compact" axis="horizontal" spacing="30"/>
+                                <variation key="heightClass=compact-widthClass=regular" axis="horizontal" spacing="30"/>
                                 <variation key="heightClass=regular-widthClass=compact" axis="vertical"/>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="un4-jy-dhA" firstAttribute="centerX" secondItem="Wyx-jV-hnQ" secondAttribute="centerX" id="01S-VP-Csf"/>
                             <constraint firstItem="GJ4-Nd-NCX" firstAttribute="leading" secondItem="Wyx-jV-hnQ" secondAttribute="leading" id="3Tb-M1-O1w"/>
+                            <constraint firstItem="un4-jy-dhA" firstAttribute="centerY" secondItem="Wyx-jV-hnQ" secondAttribute="centerY" id="5tI-3v-vbO"/>
                             <constraint firstItem="EVc-vO-sUz" firstAttribute="centerX" secondItem="Wyx-jV-hnQ" secondAttribute="centerX" id="Qzg-1G-5Kl"/>
                             <constraint firstItem="GJ4-Nd-NCX" firstAttribute="top" secondItem="Wyx-jV-hnQ" secondAttribute="top" id="SbD-WR-tdT"/>
                             <constraint firstItem="EVc-vO-sUz" firstAttribute="top" secondItem="iBi-H5-ZMy" secondAttribute="top" constant="20" id="dMz-bp-aX2"/>
@@ -77,25 +119,30 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="iBi-H5-ZMy"/>
                     </view>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="LevelClicked" modalPresentationStyle="currentContext" modalTransitionStyle="coverVertical" id="4T3-xC-oWW"/>
+                        <segue destination="SRC-Pt-0M5" kind="presentation" identifier="HighScoresClicked" modalPresentationStyle="currentContext" modalTransitionStyle="coverVertical" id="ZAU-fr-J3U"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s7N-wW-Egp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="103" y="139"/>
         </scene>
-        <!--View Controller-->
+        <!--High Scores View Controller-->
         <scene sceneID="SXo-Lu-B0l">
             <objects>
-                <viewController id="SRC-Pt-0M5" sceneMemberID="viewController">
+                <viewController id="SRC-Pt-0M5" customClass="HighScoresViewController" customModule="C10219___Concentration_Game" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eGy-vL-oiD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="5iZ-wF-gtm"/>
                     </view>
+                    <navigationItem key="navigationItem" id="KLj-ys-3gi"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lcm-p2-GUV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1477" y="139"/>
+            <point key="canvasLocation" x="874" y="459"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -253,7 +300,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="799" y="139"/>
+            <point key="canvasLocation" x="874" y="-197"/>
         </scene>
     </scenes>
     <resources>
@@ -261,10 +308,13 @@
         <image name="cardBack" width="4667" height="4667"/>
         <image name="time" width="512" height="512"/>
         <namedColor name="CardColor">
-            <color red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.92100000381469727" green="0.92100000381469727" blue="0.92100000381469727" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="TextColor">
-            <color red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.92100000381469727" green="0.92100000381469727" blue="0.92100000381469727" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="TextColor">
+            <color red="0.92100000381469727" green="0.92100000381469727" blue="0.92100000381469727" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
