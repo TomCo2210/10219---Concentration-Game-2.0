@@ -9,7 +9,7 @@
 import UIKit
 
 class MainViewController: UIViewController {
-    
+    var imagePrefix = "casino"
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -37,6 +37,7 @@ class MainViewController: UIViewController {
         else{
             let vc = segue.destination as! GameViewController
             let senderBtn = sender as! UIButton
+            vc.imagePrefix = self.imagePrefix
             switch (senderBtn.titleLabel?.text)!
             {
             case "Easy":
@@ -51,6 +52,25 @@ class MainViewController: UIViewController {
             default:
                 vc.numberOfPairs = 8
             }
+        }
+    }
+    @IBAction func ThemePicked(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex{
+        case 0:
+            imagePrefix = "casino"
+            break
+        case 1:
+            imagePrefix = "kids"
+            break
+        case 2:
+            imagePrefix = "sm"
+            break
+        case 3:
+            imagePrefix = "animal"
+            break
+        default:
+            imagePrefix = "casino"
+            
         }
     }
 }

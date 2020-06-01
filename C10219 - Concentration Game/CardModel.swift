@@ -10,7 +10,7 @@ import Foundation
 
 class CardModel {
         
-    func getDeck(_ numOfPairs:Int) -> [Card] {
+    func getDeck(_ numOfPairs:Int,_ theme:String) -> [Card] {
         
         //create an array of cards
         var cardsArray = [Card]()
@@ -20,12 +20,12 @@ class CardModel {
             
             //create first card:
             let card1 = Card()
-            card1.imageName = "symbol_\(couple)"
+            card1.imageName = "\(theme)_\(couple)"
             print(card1.imageName)
            
             //create second card:
             let card2 = Card()
-            card2.imageName = "symbol_\(couple)"
+            card2.imageName = "\(theme)_\(couple)"
             print(card2.imageName)
            
             //append both cards to array

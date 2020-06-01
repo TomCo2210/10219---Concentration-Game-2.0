@@ -12,6 +12,8 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     //Deck Collection view/Users/user167774/Documents/10219/C10219 - Concentration Game/C10219 - Concentration Game/GameViewController.swift
     @IBOutlet weak var main_CV_cards: UICollectionView!
+
+    var imagePrefix:String = "casino"
     
     var numberOfPairs:Int = 0
     //Deck init
@@ -27,10 +29,11 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBOutlet weak var main_LBL_timer: UILabel!
     var timer:Timer?
     var milis:Float!
+    var timeElapsed:Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        resetGame(numberOfPairs)
+        resetGame(numberOfPairs,imagePrefix)
         //Easy = 8, Medium = 10, Hard = 15
        
         
@@ -82,7 +85,7 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
             if card.isMatched == false
             {
                 isWon=false
-                break
+                return
             }
         }
         
@@ -93,34 +96,26 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
             timer?.invalidate()
             title = "Congratulations!"
             message = "You've Won!"
-            
-        } else {
-            if milis > 0 {
-                return
-            }
-            title = "Game Over!"
-            message = "You've Lost!"
+            showAlert(title, message)
         }
-        
-        showAlert(title, message)
-        
     }
     
     func showAlert(_ title:String, _ message:String)
     {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "Start Again!", style: .default, handler: {(alert: UIAlertAction!) in self.resetGame(0)})
+        let alertAction = UIAlertAction(title: "Start Again!", style: .default, handler: {(alert: UIAlertAction!) in self.resetGame(self.numberOfPairs,"casino")})
         alert.addAction(alertAction)
         present(alert,animated: true, completion: nil)
     }
     
-    func resetGame(_ numOfPairs:Int)
+    func resetGame(_ numOfPairs:Int,_ theme:String)
     {
-        deck = model.getDeck(numOfPairs)
-        milis = 90*1000
+        deck = model.getDeck(numOfPairs, theme)
+        
+        timeElapsed = 0
         main_CV_cards.delegate = self
         main_CV_cards.dataSource = self
-        timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(timerCountDown), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerElapsedTime), userInfo: nil, repeats: true)
         RunLoop.main.add(timer!, forMode: .common)
         firstCardFlipped = nil
         main_CV_cards.reloadData()
@@ -128,18 +123,16 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     //MARK: Timer:
-    @objc func timerCountDown() {
-        milis -= 1
-        
-        let seconds = String(format: "%.2f", milis/1000)
-        main_LBL_timer.text = "\(seconds)"
-        
-        if milis <= 0 {
-            timer?.invalidate()
-            isGameEnded()
-        }
-    }
+    @objc func timerElapsedTime() {
+        timeElapsed += 1
     
+        let seconds = String(format: "%02d", (timeElapsed%60))
+        let minutes = String(format: "%02d", timeElapsed/60)
+
+        main_LBL_timer.text = "\(minutes):\(seconds)"
+        isGameEnded()
+
+    }
     // MARK: UICollectionView Related Protocols:
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -190,12 +183,6 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //onClick()
-        
-        //if time ended, do nothing
-        if milis <= 0 {
-            return
-        }
-        
         let cell = main_CV_cards.cellForItem(at: indexPath)  as! CardCollectionViewCell
         let card = deck[indexPath.row]
         
