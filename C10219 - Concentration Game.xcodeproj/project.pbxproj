@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7118C5862485C8BD008A5EBB /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7118C5852485C8BD008A5EBB /* Location.swift */; };
+		7118C5882485C8D4008A5EBB /* HighScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7118C5872485C8D4008A5EBB /* HighScore.swift */; };
 		712625F6244610E30084DE92 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712625F5244610E30084DE92 /* AppDelegate.swift */; };
 		712625F8244610E30084DE92 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712625F7244610E30084DE92 /* SceneDelegate.swift */; };
 		712625FD244610E30084DE92 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 712625FB244610E30084DE92 /* Main.storyboard */; };
@@ -40,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7118C5852485C8BD008A5EBB /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		7118C5872485C8D4008A5EBB /* HighScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighScore.swift; sourceTree = "<group>"; };
 		712625F2244610E30084DE92 /* C10219 - Concentration Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "C10219 - Concentration Game.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		712625F5244610E30084DE92 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		712625F7244610E30084DE92 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +90,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7118C5812485C364008A5EBB /* Cards */ = {
+			isa = PBXGroup;
+			children = (
+				7154772024573F6A00F893E7 /* Card.swift */,
+				7154771E24573F5700F893E7 /* CardModel.swift */,
+				7169FE8124585BB80059DCF2 /* CardCollectionViewCell.swift */,
+			);
+			name = Cards;
+			sourceTree = "<group>";
+		};
+		7118C5822485C673008A5EBB /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				7197434F24844B3E00E4D719 /* MainViewController.swift */,
+				718A1BE6244868F200833FC0 /* GameViewController.swift */,
+				7197435124844BA900E4D719 /* HighScoresViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		7118C5832485C88B008A5EBB /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				7118C5852485C8BD008A5EBB /* Location.swift */,
+			);
+			name = Location;
+			sourceTree = "<group>";
+		};
+		7118C5842485C893008A5EBB /* HighScore */ = {
+			isa = PBXGroup;
+			children = (
+				7118C5872485C8D4008A5EBB /* HighScore.swift */,
+			);
+			path = HighScore;
+			sourceTree = "<group>";
+		};
 		712625E9244610E30084DE92 = {
 			isa = PBXGroup;
 			children = (
@@ -109,12 +149,10 @@
 		712625F4244610E30084DE92 /* C10219 - Concentration Game */ = {
 			isa = PBXGroup;
 			children = (
-				7154772024573F6A00F893E7 /* Card.swift */,
-				7169FE8124585BB80059DCF2 /* CardCollectionViewCell.swift */,
-				7154771E24573F5700F893E7 /* CardModel.swift */,
-				7197434F24844B3E00E4D719 /* MainViewController.swift */,
-				718A1BE6244868F200833FC0 /* GameViewController.swift */,
-				7197435124844BA900E4D719 /* HighScoresViewController.swift */,
+				7118C5842485C893008A5EBB /* HighScore */,
+				7118C5832485C88B008A5EBB /* Location */,
+				7118C5822485C673008A5EBB /* ViewControllers */,
+				7118C5812485C364008A5EBB /* Cards */,
 				712625FB244610E30084DE92 /* Main.storyboard */,
 				712625FE244610E40084DE92 /* Assets.xcassets */,
 				712625F5244610E30084DE92 /* AppDelegate.swift */,
@@ -278,6 +316,8 @@
 				712625F6244610E30084DE92 /* AppDelegate.swift in Sources */,
 				7154771F24573F5700F893E7 /* CardModel.swift in Sources */,
 				7154772124573F6A00F893E7 /* Card.swift in Sources */,
+				7118C5882485C8D4008A5EBB /* HighScore.swift in Sources */,
+				7118C5862485C8BD008A5EBB /* Location.swift in Sources */,
 				718A1BE7244868F200833FC0 /* GameViewController.swift in Sources */,
 				7169FE8224585BB80059DCF2 /* CardCollectionViewCell.swift in Sources */,
 				712625F8244610E30084DE92 /* SceneDelegate.swift in Sources */,

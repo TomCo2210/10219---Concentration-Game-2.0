@@ -12,14 +12,13 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     //Deck Collection view/Users/user167774/Documents/10219/C10219 - Concentration Game/C10219 - Concentration Game/GameViewController.swift
     @IBOutlet weak var main_CV_cards: UICollectionView!
-
   
-    var imagePrefix:String = "casino"
     
-    var numberOfPairs:Int = 0
     //Deck init
     var deck = [Card]()
-    
+    var cardsTheme:String = "casino"
+    var numberOfPairs:Int = 0
+
     //CardModel for Deck cards
     var model = CardModel()
     
@@ -29,16 +28,15 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
     //timer related members
     @IBOutlet weak var main_LBL_timer: UILabel!
     var timer:Timer?
-    var milis:Float!
     var timeElapsed:Int!
     
     override func viewDidLoad() {
+        //OnCreate()
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true,animated: false)
-        resetGame(numberOfPairs,imagePrefix)
+        initGame(numberOfPairs,cardsTheme)
         //Easy = 8, Medium = 10, Hard = 15
     }
-    
     
     //MARK: Game Logic:
     func checkMatch (_ secondCardFlipped:IndexPath)
@@ -79,36 +77,41 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func isGameEnded(){
-        var isWon = true
+        var haveWon = true
         
         for card in deck {
             if card.isMatched == false
             {
-                isWon=false
+                haveWon=false
                 return
             }
         }
         
-        var title = ""
-        var message = ""
+        let title = "Congratulations!"
+        var message = "You've Won!"
         
-        if isWon{
+        if haveWon{
+            
             timer?.invalidate()
-            title = "Congratulations!"
-            message = "You've Won!"
-            showAlert(title, message)
+            message = message + "\nSorry, But It Wasn't Good Enough To Enter The High Scroes Table 😔"
+            
+            showAlert(title, message,(isHighScore(timeElapsed,numberOfPairs) ? true : false), timeElapsed)
         }
     }
-    
-    func showAlert(_ title:String, _ message:String)
+    func isHighScore(_ timeElapsed:Int,_ numberOfPairs:Int) -> Bool
+    {
+        
+        return false
+    }
+    func showAlert(_ title:String, _ message:String,_ requestName:Bool ,_ timeElapsed:Int)
     {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "Start Again!", style: .default, handler: {(alert: UIAlertAction!) in self.resetGame(self.numberOfPairs,"casino")})
+        let alertAction = UIAlertAction(title: "Start Again!", style: .default, handler: {(alert: UIAlertAction!) in self.initGame(self.numberOfPairs,"casino")})
         alert.addAction(alertAction)
         present(alert,animated: true, completion: nil)
     }
     
-    func resetGame(_ numOfPairs:Int,_ theme:String)
+    func initGame(_ numOfPairs:Int,_ theme:String)
     {
         deck = model.getDeck(numOfPairs, theme)
         
@@ -130,9 +133,8 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let minutes = String(format: "%02d", timeElapsed/60)
 
         main_LBL_timer.text = "\(minutes):\(seconds)"
-        isGameEnded()
-
     }
+    
     // MARK: UICollectionView Related Protocols:
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -197,6 +199,9 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
         }
     }
+    
+    // MARK: - Navigation
+    //onBackPressed(), mimic the NavigationController Back action, with my custom back button.
     @IBAction func backButtonPressed(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
