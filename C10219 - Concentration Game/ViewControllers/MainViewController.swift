@@ -36,19 +36,24 @@ class MainViewController: UIViewController {
             let vc = segue.destination as! GameViewController
             let senderBtn = sender as! UIButton
             vc.cardsTheme = self.imagePrefix
-            switch (senderBtn.titleLabel?.text)!
+            vc.level = (senderBtn.titleLabel?.text)!
+            switch (vc.level)
             {
             case "Easy":
                 vc.numberOfPairs = 8
+                vc.index = 0
                 break
             case "Medium":
                 vc.numberOfPairs = 10
+                vc.index = 1
                 break
             case "Hard":
                 vc.numberOfPairs = 15
+                vc.index = 2
                 break
             default:
                 vc.numberOfPairs = 8
+                vc.index = 0
             }
         }
     }

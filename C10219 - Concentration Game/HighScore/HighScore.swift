@@ -10,9 +10,24 @@ import Foundation
 
 class HighScore : Codable{
     
-    var timeElapsed:Int
-    var playerName:String
-    var gameLocation:Location
+    var timeElapsed:Int = 0
+    var playerName:String = ""
+    var gameLocation:Location = Location()
+    var dateOfGame:String = ""
     
+    init() {
+        
+    }
     
+    init (timeElapsed:Int, playerName:String, gameLocation:Location){
+        self.timeElapsed = timeElapsed
+        self.playerName = playerName
+        self.gameLocation = gameLocation
+        let now = Date()
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .medium
+        formatter.locale = .current
+        self.dateOfGame = formatter.string(from: now)
+    }
 }

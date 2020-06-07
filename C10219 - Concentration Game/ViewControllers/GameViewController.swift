@@ -10,15 +10,20 @@ import UIKit
 
 class GameViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate {
     
-    //Deck Collection view/Users/user167774/Documents/10219/C10219 - Concentration Game/C10219 - Concentration Game/GameViewController.swift
+    //MARK: Members:
+    //Deck Collection view
     @IBOutlet weak var main_CV_cards: UICollectionView!
-  
     
     //Deck init
     var deck = [Card]()
     var cardsTheme:String = "casino"
     var numberOfPairs:Int = 0
-
+    var level:String = ""
+    var index:Int = 0
+    
+    //HighScore entity to send HSVC
+    var highscoreToAdd:HighScore = HighScore()
+    
     //CardModel for Deck cards
     var model = CardModel()
     
@@ -30,6 +35,7 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var timer:Timer?
     var timeElapsed:Int!
     
+    //MARK: View:
     override func viewDidLoad() {
         //OnCreate()
         super.viewDidLoad()
@@ -39,6 +45,21 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     //MARK: Game Logic:
+    
+    func initGame(_ numOfPairs:Int,_ theme:String)
+    {
+        deck = model.getDeck(numOfPairs, theme)
+        
+        timeElapsed = 0
+        main_CV_cards.delegate = self
+        main_CV_cards.dataSource = self
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerElapsedTime), userInfo: nil, repeats: true)
+        RunLoop.main.add(timer!, forMode: .common)
+        firstCardFlipped = nil
+        main_CV_cards.reloadData()
+        
+    }
+    
     func checkMatch (_ secondCardFlipped:IndexPath)
     {
         let cell1 = main_CV_cards.cellForItem(at: firstCardFlipped!) as? CardCollectionViewCell
@@ -93,49 +114,71 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
         if haveWon{
             
             timer?.invalidate()
-            message = message + "\nSorry, But It Wasn't Good Enough To Enter The High Scroes Table 😔"
-            
-            showAlert(title, message,(isHighScore(timeElapsed,numberOfPairs) ? true : false), timeElapsed)
+            let highScore = isHighScore(timeElapsed,level)
+            if(highScore){
+                message = "New High Score!"
+                showAlert(title, message, highScore, timeElapsed)
+            }
+            else{
+                message = message + "\nSorry, But It Wasn't Good Enough To Enter The High Scroes Table 😔"
+                showAlert(title, message, highScore, timeElapsed)
+            }
         }
     }
-    func isHighScore(_ timeElapsed:Int,_ numberOfPairs:Int) -> Bool
-    {
+    
+    func isHighScore(_ timeElapsed:Int,_ level:String) -> Bool {
+        let vc = HighScoresViewController()
+        return vc.checkForHighScoreInLevel(timeElapsed: timeElapsed,level: level)
         
-        return false
     }
+    
     func showAlert(_ title:String, _ message:String,_ requestName:Bool ,_ timeElapsed:Int)
     {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "Start Again!", style: .default, handler: {(alert: UIAlertAction!) in self.initGame(self.numberOfPairs,"casino")})
-        alert.addAction(alertAction)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        
+        if (requestName) {
+            alert.addTextField { (textField) in textField.placeholder = "Enter Your Name"}
+            let nameTF = alert.textFields![0]
+            let saveNewHighScore = UIAlertAction(title: "Save", style: .default, handler: {(alert: UIAlertAction!) in
+                self.addNewHighScore(timeElapsed,self.level,nameTF.text!)})
+            alert.addAction(saveNewHighScore)
+        }
+        else {
+            let startAgain = UIAlertAction(title: "Start Again!", style: .default, handler: {(alert: UIAlertAction!) in self.initGame(self.numberOfPairs,self.cardsTheme)})
+            let startNew = UIAlertAction(title: "Start New Game!", style: .default, handler: {(alert: UIAlertAction!) in self.backButtonPressed(alert as Any)})
+            alert.addAction(startAgain)
+            alert.addAction(startNew)
+        }
         present(alert,animated: true, completion: nil)
     }
     
-    func initGame(_ numOfPairs:Int,_ theme:String)
-    {
-        deck = model.getDeck(numOfPairs, theme)
-        
-        timeElapsed = 0
-        main_CV_cards.delegate = self
-        main_CV_cards.dataSource = self
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerElapsedTime), userInfo: nil, repeats: true)
-        RunLoop.main.add(timer!, forMode: .common)
-        firstCardFlipped = nil
-        main_CV_cards.reloadData()
-        
+    //MARK: - Segue to HighScoresViewController:
+    
+    func addNewHighScore(_ timeElapsed: Int,_ level: String,_ name: String) {
+        highscoreToAdd = HighScore(timeElapsed: timeElapsed, playerName: name, gameLocation: Location())
+        performSegue(withIdentifier: "moveToHighScores", sender: self)
     }
     
-    //MARK: Timer:
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "moveToHighScores") {
+            let vc = segue.destination as! HighScoresViewController
+            vc.segmentedInitialIndex = self.index
+            vc.determineCurrentLocation()
+            vc.addNewHighScore(newHighScore: highscoreToAdd, level: self.level)
+        }
+    }
+    
+    //MARK: - Timer:
     @objc func timerElapsedTime() {
         timeElapsed += 1
-    
+        
         let seconds = String(format: "%02d", (timeElapsed%60))
         let minutes = String(format: "%02d", timeElapsed/60)
-
+        
         main_LBL_timer.text = "\(minutes):\(seconds)"
     }
     
-    // MARK: UICollectionView Related Protocols:
+    // MARK: - UICollectionView Related Protocols:
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return deck.count
@@ -147,19 +190,19 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
         // width:
         var width:CGFloat
         if (self.view.frame.size.width < self.view.frame.size.height){
-        width = self.view.frame.size.width
-        width = width - (10*10)
-        let divisor = Int(sqrt(Double(deck.count)).rounded(.towardZero))
-        // 16 -> 4*4, 20 -> 4*5, 30 -> 5*6
-        print(divisor)
+            width = self.view.frame.size.width
+            width = width - (10*10)
+            let divisor = Int(sqrt(Double(deck.count)).rounded(.towardZero))
+            // 16 -> 4*4, 20 -> 4*5, 30 -> 5*6
+            print(divisor)
             width = width/CGFloat(divisor)}
         else{
             width = self.view.frame.size.height
-                   width = width - (10*10)
-                   let divisor = Int(sqrt(Double(deck.count)).rounded(.awayFromZero))
-                   // 16 -> 8*2, 20 -> 10*2, 30 -> 10*3
-                   print(divisor)
-                       width = width/CGFloat(divisor)
+            width = width - (10*10)
+            let divisor = Int(sqrt(Double(deck.count)).rounded(.awayFromZero))
+            // 16 -> 8*2, 20 -> 10*2, 30 -> 10*3
+            print(divisor)
+            width = width/CGFloat(divisor)
         }
         print(width)
         

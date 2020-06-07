@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7118C5862485C8BD008A5EBB /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7118C5852485C8BD008A5EBB /* Location.swift */; };
 		7118C5882485C8D4008A5EBB /* HighScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7118C5872485C8D4008A5EBB /* HighScore.swift */; };
+		711D4E60248D3EC0001A2311 /* HighScoresTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711D4E5F248D3EC0001A2311 /* HighScoresTableViewCell.swift */; };
 		712625F6244610E30084DE92 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712625F5244610E30084DE92 /* AppDelegate.swift */; };
 		712625F8244610E30084DE92 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712625F7244610E30084DE92 /* SceneDelegate.swift */; };
 		712625FD244610E30084DE92 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 712625FB244610E30084DE92 /* Main.storyboard */; };
@@ -44,6 +45,7 @@
 /* Begin PBXFileReference section */
 		7118C5852485C8BD008A5EBB /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		7118C5872485C8D4008A5EBB /* HighScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighScore.swift; sourceTree = "<group>"; };
+		711D4E5F248D3EC0001A2311 /* HighScoresTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighScoresTableViewCell.swift; sourceTree = "<group>"; };
 		712625F2244610E30084DE92 /* C10219 - Concentration Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "C10219 - Concentration Game.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		712625F5244610E30084DE92 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		712625F7244610E30084DE92 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				7118C5872485C8D4008A5EBB /* HighScore.swift */,
+				711D4E5F248D3EC0001A2311 /* HighScoresTableViewCell.swift */,
 			);
 			path = HighScore;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				711D4E60248D3EC0001A2311 /* HighScoresTableViewCell.swift in Sources */,
 				7197435024844B3E00E4D719 /* MainViewController.swift in Sources */,
 				712625F6244610E30084DE92 /* AppDelegate.swift in Sources */,
 				7154771F24573F5700F893E7 /* CardModel.swift in Sources */,
