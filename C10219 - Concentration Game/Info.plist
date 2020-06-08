@@ -6,8 +6,6 @@
 	<string>allow app to always know your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>allow app to know your current location</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>allow app to always know your location</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

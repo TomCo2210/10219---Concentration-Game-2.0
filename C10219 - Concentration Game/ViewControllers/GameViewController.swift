@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class GameViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate {
     
@@ -35,7 +36,10 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var timer:Timer?
     var timeElapsed:Int!
     
-    //MARK: View:
+    var locationManager:CLLocationManager!
+    var location:Location?
+    
+    //MARK: - View:
     override func viewDidLoad() {
         //OnCreate()
         super.viewDidLoad()
@@ -116,13 +120,12 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
             timer?.invalidate()
             let highScore = isHighScore(timeElapsed,level)
             if(highScore){
-                message = "New High Score!"
-                showAlert(title, message, highScore, timeElapsed)
+                message = message + "\nNew High Score!"
             }
             else{
                 message = message + "\nSorry, But It Wasn't Good Enough To Enter The High Scroes Table 😔"
-                showAlert(title, message, highScore, timeElapsed)
             }
+            showAlert(title, message, highScore, timeElapsed)
         }
     }
     
@@ -139,8 +142,8 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
         if (requestName) {
             alert.addTextField { (textField) in textField.placeholder = "Enter Your Name"}
             let nameTF = alert.textFields![0]
-            let saveNewHighScore = UIAlertAction(title: "Save", style: .default, handler: {(alert: UIAlertAction!) in
-                self.addNewHighScore(timeElapsed,self.level,nameTF.text!)})
+            let saveNewHighScore = UIAlertAction(title: "Save High Score", style: .default, handler: {(alert: UIAlertAction!) in
+                self.addNewHighScore(timeElapsed,nameTF.text!)})
             alert.addAction(saveNewHighScore)
         }
         else {
@@ -154,7 +157,7 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     //MARK: - Segue to HighScoresViewController:
     
-    func addNewHighScore(_ timeElapsed: Int,_ level: String,_ name: String) {
+    func addNewHighScore(_ timeElapsed: Int,_ name: String) {
         highscoreToAdd = HighScore(timeElapsed: timeElapsed, playerName: name, gameLocation: Location())
         performSegue(withIdentifier: "moveToHighScores", sender: self)
     }
@@ -163,8 +166,8 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
         if (segue.identifier == "moveToHighScores") {
             let vc = segue.destination as! HighScoresViewController
             vc.segmentedInitialIndex = self.index
-            vc.determineCurrentLocation()
-            vc.addNewHighScore(newHighScore: highscoreToAdd, level: self.level)
+            vc.newHighScore = highscoreToAdd
+            vc.level = self.level
         }
     }
     
@@ -179,7 +182,6 @@ class GameViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     // MARK: - UICollectionView Related Protocols:
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return deck.count
     }

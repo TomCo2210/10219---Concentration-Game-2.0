@@ -21,6 +21,6 @@ class Location: Codable {
         self.longitude = longitude
     }
     public var toString: String {
-        return "Location: \nLatitude: \(self.latitude)\nLongitude: \(self.longitude)"
+        return "\(self.latitude),\(self.longitude)"
     }
 }
