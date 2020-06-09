@@ -9,10 +9,11 @@
 import Foundation
 
 class Location: Codable {
-    
+    //MARK: - Members
     var longitude : Double = 0
     var latitude : Double = 0
 
+    //MARK: - Constructors
     init (){}
     
     init (latitude: Double, longitude: Double)
@@ -20,6 +21,7 @@ class Location: Codable {
         self.latitude = latitude
         self.longitude = longitude
     }
+    //MARK: - toString
     public var toString: String {
         return "\(self.latitude),\(self.longitude)"
     }

@@ -9,7 +9,7 @@
 import Foundation
 
 class CardModel {
-        
+    //MARK: - Generate Deck of Cards
     func getDeck(_ numOfPairs:Int,_ theme:String) -> [Card] {
         
         //create an array of cards
@@ -35,7 +35,7 @@ class CardModel {
         print("Cards in deck: \(cardsArray.count)")
         
         //suffle deck
-       // cardsArray.shuffle()
+        cardsArray.shuffle()
         for card in cardsArray{
             print(card.imageName)
         }

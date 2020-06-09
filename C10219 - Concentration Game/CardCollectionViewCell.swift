@@ -10,11 +10,13 @@ import UIKit
 
 class CardCollectionViewCell: UICollectionViewCell {
     
+    //MARK: - Members
     @IBOutlet weak var card_IMG_front:UIImageView!
     @IBOutlet weak var card_IMG_back:UIImageView!
     
     var card:Card?
     
+    //MARK: - setCard
     func setCard (_ card:Card){
         
         self.card = card
@@ -40,15 +42,17 @@ class CardCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    //MARK: - Card Actions
     func flip() {
         UIView.transition(from: card_IMG_back, to: card_IMG_front, duration: 0.2, options: [.transitionFlipFromLeft,.showHideTransitionViews], completion: nil)
     }
+    
     func flipBack() {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.4) {
             UIView.transition(from: self.card_IMG_front, to: self.card_IMG_back , duration: 0.2, options: [.transitionFlipFromRight,.showHideTransitionViews], completion: nil)
         }
-        
     }
+    
     func remove(){
         
         card_IMG_back.alpha=0

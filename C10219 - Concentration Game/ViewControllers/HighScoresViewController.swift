@@ -10,151 +10,97 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class HighScoresViewController: UIViewController, CLLocationManagerDelegate {
-
+class HighScoresViewController: UIViewController {
+    
     @IBOutlet weak var HighScores_SEGCTRL_level: UISegmentedControl!
     @IBOutlet weak var HighScores_TBLV_list: UITableView!
     @IBOutlet weak var HighScores_MAP_map: MKMapView!
+    
     var highScoresToShow = [HighScore]()
+    
     var segmentedInitialIndex :Int = 0
     
     var newHighScore:HighScore?
     var level:String?
     
-    var locationManager:CLLocationManager!
+    var locationManager:CLLocationManager = CLLocationManager()
     var location:Location?
     
+    var memoryIO = MemoryIO()
+    
+    //MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
-     //clearUserDefaults()
+        
+        //REMOVE "//" IF YOU WANT TO CLEAN HIGHSCORES SAVED IN MEMORY.
+        memoryIO.clearUserDefaults()
+        
+        //hide nav bar:
         navigationController?.setNavigationBarHidden(true,animated: false)
-        HighScores_SEGCTRL_level.selectedSegmentIndex = segmentedInitialIndex
+        
+        //list protocols setters
         HighScores_TBLV_list.delegate = self
         HighScores_TBLV_list.dataSource = self
+        
+        //select level of highscores to show:
+        HighScores_SEGCTRL_level.selectedSegmentIndex = segmentedInitialIndex
         LevelPicked(HighScores_SEGCTRL_level)
-        if (newHighScore != nil && level != nil){
-            determineCurrentLocation()
-        }
+        
+        //if got here through the game -> need to add new highscore -> need to determine location
+        if (newHighScore != nil && level != nil){ determineCurrentLocation() }
+        
+        //if it is the first time running this app, no highscores to read, no location to set on map.
         if !highScoresToShow.isEmpty {
-        HighScores_TBLV_list.selectRow(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: UITableView.ScrollPosition.top)
-        let location = CLLocationCoordinate2D(latitude: highScoresToShow[0].gameLocation.latitude , longitude:highScoresToShow[0].gameLocation.longitude  )
-        let region = MKCoordinateRegion(center: location, latitudinalMeters: 1000, longitudinalMeters: 1000)
-            HighScores_MAP_map.setRegion(region, animated: true)
-            
+            HighScores_TBLV_list.selectRow(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: UITableView.ScrollPosition.top)
+            createRegion(
+                latitude: highScoresToShow[0].gameLocation.latitude,
+                longitude:highScoresToShow[0].gameLocation.longitude)
         }
     }
-        
+    
     //MARK: - SegmentedControl Picker
     @IBAction func LevelPicked(_ sender: UISegmentedControl) {
-        highScoresToShow = readFromUserDefaults(level: sender.titleForSegment(at: sender.selectedSegmentIndex)!)
+        highScoresToShow = memoryIO.readFromUserDefaults(level: sender.titleForSegment(at: sender.selectedSegmentIndex)!)
         print("HighScores for level \(sender.titleForSegment(at: sender.selectedSegmentIndex)!) Loaded")
         HighScores_TBLV_list.reloadData()
     }
-        
-   // MARK: - MANGE STROAGE
-    func writeToUserDefaults(highScores: [HighScore],level :String){
-        let userDefaults = UserDefaults.standard
-        userDefaults.set(fromListToJson(list: highScores), forKey: level)
-    }
-    
-    func readFromUserDefaults(level:String) -> [HighScore]{
-        let userDefaults = UserDefaults.standard
-        if let highScores: [HighScore] = fromJsonToList(json: userDefaults.string(forKey: level) ?? ""){
-                return highScores
-        }
-        return [HighScore]()
-    }
     
     // MARK: - Add To TableView
-    
     func addNewHighScore(newHighScore: HighScore, level :String){
-        var highScores = readFromUserDefaults(level: level)
+        var highScores = memoryIO.readFromUserDefaults(level: level)
         if (highScores.count == 10){
             highScores.remove(at: highScores.count - 1)
         }
         highScores.append(newHighScore)
         highScores.sort(by: {$0.timeElapsed < $1.timeElapsed})
-        writeToUserDefaults(highScores: highScores, level: level)
+        memoryIO.writeToUserDefaults(highScores: highScores, level: level)
         self.highScoresToShow = highScores
         HighScores_TBLV_list.reloadData()
     }
     
+    //MARK: - HighScore Check
+    func checkForHighScoreInLevel(timeElapsed:Int,level :String) -> Bool {
+        let highScores = memoryIO.readFromUserDefaults(level: level)
+        return ((highScores.count != 10) ? true : (highScores[highScores.count - 1].timeElapsed>timeElapsed))
+    }
+    
     // MARK: - Navigation
-     @IBAction func backButtonPressed(_ sender: Any) {
-         self.navigationController?.popToRootViewController(animated: true)
-     }
-
-    //MARK: - JSON Convertion
-    func fromListToJson(list: [HighScore]) -> String {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        let data = try! encoder.encode(list)
-        let jsonString: String = String(data: data, encoding: .utf8)!
-        return jsonString
+    @IBAction func backButtonPressed(_ sender: Any) {
+        self.navigationController?.popToRootViewController(animated: true)
     }
-    
-    func fromJsonToList(json: String) -> [HighScore]? {
-        let decoder = JSONDecoder()
-        if json == "" {
-            return [HighScore]()
-        }else{
-            let data: [HighScore]
-            let convertedData: Data = json.data(using: .utf8)!
-            data = try! decoder.decode([HighScore].self,from: convertedData)
-            return data
-        }
-    }
-    
-    //MARK:- CLLocationManagerDelegate Methods
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let mUserLocation = locations.last {
-            locationManager.stopUpdatingLocation()
-            newHighScore?.gameLocation = Location(latitude: mUserLocation.coordinate.latitude, longitude: mUserLocation.coordinate.longitude)
-            let center = CLLocationCoordinate2D(latitude: mUserLocation.coordinate.latitude, longitude: mUserLocation.coordinate.longitude)
-            let mRegion = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-
-            HighScores_MAP_map.setRegion(mRegion, animated: true)
-            print("Location Aquired!")
-        }
-        addNewHighScore(newHighScore: self.newHighScore!, level: self.level!)
-        HighScores_TBLV_list.reloadData()
-    }
-    
-  func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Error - locationManager: \(error.localizedDescription)")
-    }
-    
-    //MARK:- Intance Methods
-    func determineCurrentLocation() {
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        //locationManager.requestAlwaysAuthorization()
-        
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.requestLocation()
-        }
-    }
-    func createMarksOnMap(latitude:Double,longitude:Double ,title:String) {
-        // Get user's Current Location and Drop a pin
-        let mkAnnotation: MKPointAnnotation = MKPointAnnotation()
-        mkAnnotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
-        mkAnnotation.title = title
-        HighScores_MAP_map.addAnnotation(mkAnnotation)
-    }
-    
 }
 
 
 
 // MARK: - PROTOCOL FOR TABLE-VIEW
 extension HighScoresViewController :UITableViewDataSource, UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return highScoresToShow.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell :HighScoresTableViewCell? = self.HighScores_TBLV_list.dequeueReusableCell(withIdentifier: "highScoreCell") as? HighScoresTableViewCell
+        var cell = self.HighScores_TBLV_list.dequeueReusableCell(withIdentifier: "highScoreCell", for: indexPath) as? HighScoresTableViewCell
         
         cell?.highScores_LBL_rank.text = "\(indexPath.row + 1))"
         
@@ -166,33 +112,100 @@ extension HighScoresViewController :UITableViewDataSource, UITableViewDelegate {
         
         cell?.highScores_LBL_location.text = self.highScoresToShow[indexPath.row].gameLocation.toString
         cell?.highScores_LBL_date.text = self.highScoresToShow[indexPath.row].dateOfGame
-        
         createMarksOnMap(latitude: self.highScoresToShow[indexPath.row].gameLocation.latitude, longitude: self.highScoresToShow[indexPath.row].gameLocation.longitude,title: self.highScoresToShow[indexPath.row].dateOfGame)
         
-        if(cell == nil){
+        if (cell == nil){
             cell = HighScoresTableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "highScoreCell")
         }
+        
         return cell!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let location = CLLocationCoordinate2D(latitude: highScoresToShow[indexPath.row].gameLocation.latitude , longitude:highScoresToShow[indexPath.row].gameLocation.longitude  )
-        let region = MKCoordinateRegion(center: location, latitudinalMeters: 1000, longitudinalMeters: 1000)
-        HighScores_MAP_map.setRegion(region, animated: true)
+        createRegion(
+            latitude: self.highScoresToShow[indexPath.row].gameLocation.latitude,
+            longitude: self.highScoresToShow[indexPath.row].gameLocation.longitude)
+    }
+}
+
+//MARK:- CLLocationManagerDelegate Methods
+extension HighScoresViewController : CLLocationManagerDelegate  {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let mUserLocation = locations.last {
+            locationManager.stopUpdatingLocation()
+            newHighScore?.gameLocation = Location(latitude: mUserLocation.coordinate.latitude, longitude: mUserLocation.coordinate.longitude)
+            createRegion(
+                latitude: mUserLocation.coordinate.latitude,
+                longitude: mUserLocation.coordinate.longitude)
+            print("Location Aquired!")
+        }
+        addNewHighScore(newHighScore: self.newHighScore!, level: self.level!)
+        HighScores_TBLV_list.reloadData()
     }
     
-    // MARK: - Clean User Defaults
-    func clearUserDefaults(){
-        UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
-        UserDefaults.standard.synchronize()
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Error - locationManager: \(error.localizedDescription)")
+    }
+    
+    func createRegion(latitude:Double,longitude:Double){
+        let mRegion = MKCoordinateRegion(
+            center: CLLocationCoordinate2D(
+                latitude: latitude,
+                longitude: longitude),
+            latitudinalMeters: 1000, longitudinalMeters: 1000)
         
+        HighScores_MAP_map.setRegion(mRegion, animated: true)
     }
     
-    //MARK: - HighScore Check
-    func checkForHighScoreInLevel(timeElapsed:Int,level :String) -> Bool {
-        let highScores = readFromUserDefaults(level: level)
-      
-        return ((highScores.count != 10) ? true : (highScores[highScores.count - 1].timeElapsed>timeElapsed))
+    func checkLocationAuthorization( ) {
+        switch CLLocationManager.authorizationStatus() {
+        case .authorizedWhenInUse:
+            locationManager.requestLocation()
+            break
+        case .denied:
+            GPSAlert()
+            break
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted:
+            GPSAlert()
+            break
+        case .authorizedAlways:
+            locationManager.requestLocation()
+            break
+        default:
+            break
+        }
+    }
+    
+    func determineCurrentLocation() {
+        if CLLocationManager.locationServicesEnabled() {
+            setupLocationManager()
+            checkLocationAuthorization()
+        } else {
+            GPSAlert()
+        }
+    }
+    
+    func GPSAlert(){
+        let alert = UIAlertController(title: "Current Location Not Available", message: "Your current location cannot be determined at this time. Cannot save High Score.", preferredStyle: UIAlertController.Style.alert)
+        let alertAction = UIAlertAction(title: "OK", style: .default, handler: {(alert: UIAlertAction!) in self.backButtonPressed(self)})
+        alert.addAction(alertAction)
+        present(alert,animated: true, completion: nil)
+    }
+    
+    func setupLocationManager() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    }
+    
+    func createMarksOnMap(latitude:Double,longitude:Double ,title:String) {
+        // Get user's Current Location and Drop a pin
+        let mkAnnotation: MKPointAnnotation = MKPointAnnotation()
+        mkAnnotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+        mkAnnotation.title = title
+        HighScores_MAP_map.addAnnotation(mkAnnotation)
     }
 }
 
