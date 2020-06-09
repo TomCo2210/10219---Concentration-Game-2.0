@@ -33,7 +33,7 @@ class HighScoresViewController: UIViewController {
         super.viewDidLoad()
         
         //REMOVE "//" IF YOU WANT TO CLEAN HIGHSCORES SAVED IN MEMORY.
-        memoryIO.clearUserDefaults()
+        //memoryIO.clearUserDefaults()
         
         //hide nav bar:
         navigationController?.setNavigationBarHidden(true,animated: false)
