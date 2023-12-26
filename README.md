@@ -1,5 +1,8 @@
 
 # Concentration Game 2.0
+
+Home Assignement Exercise for iOS Application Development course, in Afeka - the academic college of Engineering in Tel Aviv.
+
 ## Overview
 
 Concentration Game 2.0 is an engaging memory game designed for iOS devices, utilizing Swift 5. Challenge your memory and attention with this fun and interactive game.
